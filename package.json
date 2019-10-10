@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.6.4",
     "@babel/runtime": "^7.6.3",
+    "babel-loader": "^8.0.6",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-icons": "^3.7.0",

@@ -1,0 +1,22 @@
+.container {
+  max-width: 960px;
+  height: 800px;
+  margin: 0 auto;
+}
+
+.containerCard{
+  display: flex;
+  justify-content: space-between
+}
+
+.itemCard{
+  margin-top: 10px;
+}
+
+@media (max-width: 760px){
+  .containerCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

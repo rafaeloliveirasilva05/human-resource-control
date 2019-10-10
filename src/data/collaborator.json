@@ -1,0 +1,25 @@
+{
+  "colaborator": [
+    {
+      "id": 1,
+      "first_name": "Morpheus",
+      "last_name": "Fishburne",
+      "department": 1,
+      "active_status": 1
+    },
+    {
+      "id": 2,
+      "first_name": "Neo",
+      "last_name": "Reeves",
+      "department": 2,
+      "active_status": 0
+    },
+    {
+      "id": 3,
+      "first_name": "Trinity",
+      "last_name": "Moss",
+      "department": 3,
+      "active_status": 1
+    }
+  ]
+}

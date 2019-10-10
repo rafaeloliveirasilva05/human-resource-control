@@ -1,13 +1,13 @@
 import React from 'react'
 import { FaUser } from 'react-icons/fa';
 
-import './styles.css'
+import styles from './styles.module.css'
 
 function Header() {
   return (
     <header>
-      <div className='container'>
-        <div className='userData'>
+      <div className={styles.container}>
+        <div className={styles.userData} >
           <label>Name</label>
           <div>
             <FaUser size={26} color={'#a9a9a9'} />
