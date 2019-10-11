@@ -44,11 +44,11 @@ function PresentationEmployeeData() {
 
     return allActiveCollaborator.length
   }
-  
+
   function insertTotalCollaboratorColorEachDepartment() {
     const departmentWithColorTotalCollaborator = colors.map(currentColor => {
       const departament = departmentData.find(currentDepatament => currentColor.id === currentDepatament.id)
-      
+
       return {
         ...currentColor,
         ...departament,
@@ -57,6 +57,42 @@ function PresentationEmployeeData() {
     })
 
     return departmentWithColorTotalCollaborator
+  }
+
+  function rederTableData() {
+    return collaboratorData.map(collaborato => {
+
+      const sectorColor = colors.find(color => color.id === collaborato.id)
+      const department = departmentData.find(department => department.id === collaborato.department)
+
+      return (
+        <tr key={collaborato.id}>
+          <td>{collaborato.first_name}</td>
+          <td>
+            <div className={styles.containerLabel} >
+              <div className={styles.sectorLabel} style={{ backgroundColor: sectorColor.color }}>
+                {department.name}
+              </div>
+            </div>
+          </td>
+        </tr>
+      )
+    })
+  }
+
+  function renderTableHeader() {
+    return (
+      <tr>
+        <th>
+          <div style={{ display: 'flex' }}>Nome</div>
+        </th>
+        <th>
+          <div className={styles.containerLabel}>
+            <div>setor</div>
+          </div>
+        </th>
+      </tr>
+    )
   }
 
   return (
@@ -70,6 +106,18 @@ function PresentationEmployeeData() {
               TotalEmployeesDepartment={element.TotalEmployeesDepartment} />
           </div>
         )}
+      </div>
+
+      <div className={styles.containerTable}>
+        <table>
+          <thead>
+            {renderTableHeader()}
+          </thead>
+
+          <tbody>
+            {rederTableData()}
+          </tbody>
+        </table>
       </div>
     </div>
   )
