@@ -5,10 +5,13 @@ import styles from './styles.module.css'
 import departmentDataJson from '../../data/department.json'
 import collaboratorDataJson from '../../data/collaborator.json'
 import Card from '../../components/Card'
+import Modal from '../../components/Modal'
 
 function PresentationEmployeeData() {
   const [departmentData, setDepartmentData] = useState(departmentDataJson.department)
   const [collaboratorData, setCollaboratorData] = useState(collaboratorDataJson.colaborator)
+  const [ showModal, setShowModal] = useState(true)
+ 
 
   const colors = [
     {
@@ -60,14 +63,17 @@ function PresentationEmployeeData() {
   }
 
   function rederTableData() {
-    return collaboratorData.map(collaborato => {
+    return collaboratorData.map(collaborator => {
 
-      const sectorColor = colors.find(color => color.id === collaborato.id)
-      const department = departmentData.find(department => department.id === collaborato.department)
+      const sectorColor = colors.find(color => color.id === collaborator.id)
+      const department = departmentData.find(department => department.id === collaborator.department)
 
       return (
-        <tr key={collaborato.id}>
-          <td>{collaborato.first_name}</td>
+        <tr
+          key={collaborator.id}
+          style={{ cursor: 'pointer' }}
+          onClick={() => showCollaborator(collaborator)}>
+          <td>{collaborator.first_name}</td>
           <td>
             <div className={styles.containerLabel} >
               <div className={styles.sectorLabel} style={{ backgroundColor: sectorColor.color }}>
@@ -95,8 +101,24 @@ function PresentationEmployeeData() {
     )
   }
 
+  function showCollaborator(collaboratorData) {
+    setShowModal(true)
+  }
+
+  function hideModal() {
+    setShowModal(false)
+  }
+
   return (
     <div className={styles.container}>
+
+      <Modal 
+        showModal={showModal} 
+        handleClose={hideModal}
+        title={'Aviso'}
+        message={'Deseja desativar o colaborador JOÃO DA SILVA'}>
+      </Modal>
+
       <div className={styles.containerCard}>
         {insertTotalCollaboratorColorEachDepartment().map(element =>
           <div className={styles.itemCard} key={element.id}>
