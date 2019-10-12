@@ -1,5 +1,7 @@
 import React from 'react'
+
 import styles from './styles.module.css'
+import Button from '../../components/Button'
 
 const Modal = ({ handleClose, showModal, title, message }) => {
   const showHideClassName = showModal ? 'block' : 'none'
@@ -8,13 +10,20 @@ const Modal = ({ handleClose, showModal, title, message }) => {
     <div className={styles.modal} style={{ display: showHideClassName }}>
       <section className={styles.modalMain}>
         <div>
-          <h1>{title}</h1>
+          <h1 className={styles.tes}>{title}</h1>
           <h3>{message}</h3>
         </div>
 
         <div className={styles.containerButton}>
-          <button className={styles.btVd} onClick={handleClose}>Sim</button>
-          <button className={styles.btVm} onClick={handleClose}>Não</button>
+          <Button
+            buttonAction={handleClose}
+            label={'Não'}
+            buttonColor={'red'} />
+
+          <Button
+            buttonAction={handleClose}
+            label={'Sim'}
+            buttonColor={'green'} />
         </div>
       </section>
     </div>

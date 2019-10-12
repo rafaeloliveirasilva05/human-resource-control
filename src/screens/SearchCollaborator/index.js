@@ -1,17 +1,16 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { useHistory } from "react-router-dom";
 
 import styles from './styles.module.css'
 import departmentDataJson from '../../data/department.json'
 import collaboratorDataJson from '../../data/collaborator.json'
 import Card from '../../components/Card'
-import Modal from '../../components/Modal'
 
-function PresentationEmployeeData() {
+function SearchCollaborator(props) {
   const [departmentData, setDepartmentData] = useState(departmentDataJson.department)
   const [collaboratorData, setCollaboratorData] = useState(collaboratorDataJson.colaborator)
-  const [ showModal, setShowModal] = useState(true)
- 
+
+  let history = useHistory()
 
   const colors = [
     {
@@ -72,7 +71,8 @@ function PresentationEmployeeData() {
         <tr
           key={collaborator.id}
           style={{ cursor: 'pointer' }}
-          onClick={() => showCollaborator(collaborator)}>
+          onClick={() => showCollaborator(collaborator)}
+        >
           <td>{collaborator.first_name}</td>
           <td>
             <div className={styles.containerLabel} >
@@ -102,23 +102,13 @@ function PresentationEmployeeData() {
   }
 
   function showCollaborator(collaboratorData) {
-    setShowModal(true)
+    history.push("/sobre", collaboratorData);
   }
 
-  function hideModal() {
-    setShowModal(false)
-  }
+  
 
   return (
     <div className={styles.container}>
-
-      <Modal 
-        showModal={showModal} 
-        handleClose={hideModal}
-        title={'Aviso'}
-        message={'Deseja desativar o colaborador JOÃO DA SILVA'}>
-      </Modal>
-
       <div className={styles.containerCard}>
         {insertTotalCollaboratorColorEachDepartment().map(element =>
           <div className={styles.itemCard} key={element.id}>
@@ -145,4 +135,4 @@ function PresentationEmployeeData() {
   )
 }
 
-export default PresentationEmployeeData
+export default SearchCollaborator

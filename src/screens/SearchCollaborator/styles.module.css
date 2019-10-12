@@ -27,6 +27,11 @@
   margin: 0 auto;
 }
 
+.link{
+  background-color: red;
+  width: 800px;
+}
+
 table{
   margin-top: 60px;
   text-align: center;
@@ -43,7 +48,7 @@ th{
 td {
   text-align: left;
   padding: 15px 8px;
-  border-top: 1px solid #d3d3d3;
+  border-top: 1px solid #d3d3d3; 
 }
 
 /* tr:nth-child(even){background-color: #fff0f5} */
