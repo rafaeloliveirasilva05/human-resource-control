@@ -20,6 +20,20 @@
       "last_name": "Moss",
       "department": 3,
       "active_status": 1
+    },
+    {
+      "id": 4,
+      "first_name": "Trini",
+      "last_name": "Moss",
+      "department": 3,
+      "active_status": 1
+    },
+    {
+      "id": 5,
+      "first_name": "Neon",
+      "last_name": "Reeves",
+      "department": 2,
+      "active_status": 0
     }
   ]
 }

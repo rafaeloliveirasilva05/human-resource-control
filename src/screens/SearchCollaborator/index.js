@@ -1,88 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 
 import styles from './styles.module.css'
 import departmentDataJson from '../../data/department.json'
 import collaboratorDataJson from '../../data/collaborator.json'
 import Card from '../../components/Card'
+import { departmentData } from '../../utils'
 
 function SearchCollaborator(props) {
-  const [departmentData, setDepartmentData] = useState(departmentDataJson.department)
-  const [collaboratorData, setCollaboratorData] = useState(collaboratorDataJson.colaborator)
+  const [collaboratorName, setCollaboratorName] = useState('')
+  const [collaboratorData, setCollaboratorData] = useState([])
+  const [fixedListCollaboratorData, setFixedListCollaboratorData] = useState([])
 
   let history = useHistory()
 
-  const colors = [
-    {
-      id: 1,
-      color: 'green'
-    },
-    {
-      id: 2,
-      color: 'red',
-    },
-    {
-      id: 3,
-      color: 'blue',
-    }
-  ]
+  useEffect(() => {
+    const { colaborator } = collaboratorDataJson
+    const { department } = departmentDataJson
+    const data = collaboratorsDataMapping(colaborator, department)
 
-  function totalInactiveCollaboratorByDepartment(departmentId) {
-    const allInactiveCollaborator = collaboratorData.filter(currentElement => {
-      if (!currentElement.active_status) {
-        return currentElement.department === departmentId
-      }
-    })
+    setFixedListCollaboratorData(data)
+    setCollaboratorData(data)
+  }, [])
 
-    return allInactiveCollaborator.length
-  }
-
-  function totalActiveCollaboratorByDepartment(departmentId) {
-    const allActiveCollaborator = collaboratorData.filter(currentElement => {
-      if (currentElement.active_status) {
-        return currentElement.department === departmentId
-      }
-    })
-
-    return allActiveCollaborator.length
-  }
-
-  function insertTotalCollaboratorColorEachDepartment() {
-    const departmentWithColorTotalCollaborator = colors.map(currentColor => {
-      const departament = departmentData.find(currentDepatament => currentColor.id === currentDepatament.id)
+  function collaboratorsDataMapping(colaborator, department) {
+    return colaborator.map(currentColaborator => {
+      const departament = department.find(departament => departament.id === currentColaborator.department)
+      const color = departmentData.find(color => color.id === currentColaborator.department)
 
       return {
-        ...currentColor,
-        ...departament,
-        TotalEmployeesDepartment: totalActiveCollaboratorByDepartment(currentColor.id)
+        id: currentColaborator.id,
+        first_name: currentColaborator.first_name,
+        last_name: currentColaborator.last_name,
+        active_status: currentColaborator.active_status,
+        name_departament: departament.name,
+        departamentId: departament.id,
+        color_departament: color.color_departament
       }
     })
-
-    return departmentWithColorTotalCollaborator
   }
 
-  function rederTableData() {
-    return collaboratorData.map(collaborator => {
+  function mappingTotalCollaboratorsByDepartment() {
+    return departmentData.map(currentDepartment => {
+      const allActiveCollaborator = fixedListCollaboratorData.filter(currentElement => {
+        return currentElement.active_status && currentElement.departamentId === currentDepartment.id
+      })
 
-      const sectorColor = colors.find(color => color.id === collaborator.id)
-      const department = departmentData.find(department => department.id === collaborator.department)
-
-      return (
-        <tr
-          key={collaborator.id}
-          style={{ cursor: 'pointer' }}
-          onClick={() => showCollaborator(collaborator)}
-        >
-          <td>{collaborator.first_name}</td>
-          <td>
-            <div className={styles.containerLabel} >
-              <div className={styles.sectorLabel} style={{ backgroundColor: sectorColor.color }}>
-                {department.name}
-              </div>
-            </div>
-          </td>
-        </tr>
-      )
+      return {
+        ...currentDepartment,
+        TotalEmployeesDepartment: allActiveCollaborator.length
+      }
     })
   }
 
@@ -101,35 +68,89 @@ function SearchCollaborator(props) {
     )
   }
 
-  function showCollaborator(collaboratorData) {
-    history.push("/sobre", collaboratorData);
+  function rederTableData() {
+    return collaboratorData.map(currentColaborator => {
+      return (
+        <tr
+          key={currentColaborator.id}
+          style={{ cursor: 'pointer' }}
+          onClick={() => showCollaborator(currentColaborator)}>
+          <td>{currentColaborator.first_name}</td>
+          <td>
+            <div className={styles.containerLabel} >
+              <div className={styles.sectorLabel} style={{ backgroundColor: currentColaborator.color_departament }}>
+                {currentColaborator.name_departament}
+              </div>
+            </div>
+          </td>
+        </tr>
+      )
+    })
   }
 
-  
+  function showCollaborator(collaborator) {
+    history.push("/sobre", collaborator);
+  }
+
+  function handleInputChange(event) {
+    searchByName(event.target.value)
+    setCollaboratorName(event.target.value)
+  }
+
+  function searchByName(name) {
+    let listCollaborators = fixedListCollaboratorData
+
+    listCollaborators = listCollaborators.filter(collaborator => {
+      return collaborator.first_name.toLowerCase().indexOf(name.toLowerCase()) === 0
+    })
+
+    setCollaboratorData(listCollaborators)
+  }
 
   return (
     <div className={styles.container}>
+      <h2>Quadro de Colaboradores</h2>
+
+      <input
+        name='name'
+        placeholder='Buscar colaborador'
+        value={collaboratorName}
+        onChange={handleInputChange}/>
+
       <div className={styles.containerCard}>
-        {insertTotalCollaboratorColorEachDepartment().map(element =>
+        {mappingTotalCollaboratorsByDepartment().map(element =>
           <div className={styles.itemCard} key={element.id}>
             <Card
-              color={element.color}
-              departament={element.name}
+              color={element.color_departament}
+              departament={element.name_departament}
               TotalEmployeesDepartment={element.TotalEmployeesDepartment} />
-          </div>
-        )}
+          </div>)}
       </div>
 
-      <div className={styles.containerTable}>
-        <table>
-          <thead>
-            {renderTableHeader()}
-          </thead>
+      <div style={{ marginTop: '40px' }}>
+        {/* <h2 style={{ marginTop: '40px' }}>Total de Colaboradores Ativos</h2> */}
+        <div className={styles.containerTeste}>
 
-          <tbody>
-            {rederTableData()}
-          </tbody>
-        </table>
+          <div className={styles.containerFilter}>
+            <span>Filtrar por:</span>
+            <h4>teste 1</h4>
+            <h4>teste 2</h4>
+            <h4>teste 3</h4>
+            <h4>teste 4</h4>
+          </div>
+
+          <div className={styles.containerTable}>
+            <table>
+              <thead>
+                {renderTableHeader()}
+              </thead>
+              <tbody>
+                {rederTableData()}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
       </div>
     </div>
   )

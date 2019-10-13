@@ -4,31 +4,14 @@ import { useHistory } from "react-router-dom";
 import styles from './styles.module.css'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+import { departmentData } from '../../utils'
 
 function CollaboratorData(props) {
   const [collaboratorData] = useState(props.history.location.state)
   const [showModal, setShowModal] = useState(false)
 
   let history = useHistory()
-  const { first_name, last_name, department, active_status } = collaboratorData
-
-  const colors = [
-    {
-      id: 1,
-      color: 'green',
-      department: 'Administrativo'
-    },
-    {
-      id: 2,
-      color: 'red',
-      department: 'Desenvolvimento'
-    },
-    {
-      id: 3,
-      color: 'blue',
-      department: 'Compras'
-    }
-  ]
+  const { first_name, last_name, departamentId, active_status } = collaboratorData
 
   function disableCollaborator() {
     setShowModal(false)
@@ -36,7 +19,7 @@ function CollaboratorData(props) {
   }
 
   function mapDepartment(departamentId) {
-    return colors.find(color => color.id === departamentId).department
+    return departmentData.find(currentDepartment => currentDepartment.id === departamentId).name_departament
   }
 
   return (
@@ -57,7 +40,7 @@ function CollaboratorData(props) {
 
         <div className={styles.containerData}>
           <label>Departamento</label>
-          <h4>{mapDepartment(department)}</h4>
+          <h4>{mapDepartment(departamentId)}</h4>
         </div>
 
         <div className={styles.containerData}>
