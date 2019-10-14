@@ -41,6 +41,48 @@
       "last_name": "Reeves",
       "department": 1,
       "active_status": 0
+    },
+    {
+      "id": 7,
+      "first_name": "Morpheus",
+      "last_name": "Fishburne",
+      "department": 1,
+      "active_status": 1
+    },
+    {
+      "id": 8,
+      "first_name": "Neo",
+      "last_name": "Reeves",
+      "department": 2,
+      "active_status": 0
+    },
+    {
+      "id": 9,
+      "first_name": "Trinity",
+      "last_name": "Moss",
+      "department": 3,
+      "active_status": 1
+    },
+    {
+      "id": 10,
+      "first_name": "Trini",
+      "last_name": "Moss",
+      "department": 3,
+      "active_status": 1
+    },
+    {
+      "id": 11,
+      "first_name": "Neon",
+      "last_name": "Reeves",
+      "department": 2,
+      "active_status": 0
+    },
+    {
+      "id": 12,
+      "first_name": "Jonas",
+      "last_name": "Reeves",
+      "department": 1,
+      "active_status": 0
     }
   ]
 }

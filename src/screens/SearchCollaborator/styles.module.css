@@ -37,32 +37,6 @@ h2 {
 }
 
 /************* Table ************/
-.containerTeste {
-  display: flex;
-}
-
-.containerTable{
-  flex: 3;
-}
-
-table{
-  text-align: center;
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-}
-
-th{
-  padding: 15px 8px;
-  border-top: 1px solid #d3d3d3;
-}
-
-td {
-  text-align: left;
-  padding: 15px 8px;
-  border-top: 1px solid #d3d3d3; 
-}
-
 .containerLabel {
   display: flex;
   justify-content: flex-end;

@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from "react-router-dom";
-import { MdCheckBox } from 'react-icons/md';
-import { MdCheckBoxOutlineBlank } from 'react-icons/md';
+import { useHistory } from "react-router-dom"
+import { MdCheckBox } from 'react-icons/md'
+import { MdCheckBoxOutlineBlank } from 'react-icons/md'
+
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 
 import styles from './styles.module.css'
 import departmentDataJson from '../../data/department.json'
@@ -46,7 +54,7 @@ function SearchCollaborator(props) {
         id: currentColaborator.id,
         first_name: currentColaborator.first_name,
         last_name: currentColaborator.last_name,
-        full_name: `${ currentColaborator.first_name} ${currentColaborator.last_name}`,
+        full_name: `${currentColaborator.first_name} ${currentColaborator.last_name}`,
         active_status: currentColaborator.active_status,
         name_departament: departament.name,
         departamentId: departament.id,
@@ -78,41 +86,43 @@ function SearchCollaborator(props) {
 
   function renderTableHeader() {
     return (
-      <tr>
-        <th>
-          <div style={{ display: 'flex' }}>Nome</div>
-        </th>
-        <th>
-          <div className={styles.containerLabel}>
-            <div>setor</div>
-          </div>
-        </th>
-      </tr>
+      <TableHead>
+        <TableRow>
+          <TableCell>Nome</TableCell>
+          <TableCell align="right">
+            <div className={styles.containerLabel}>
+              <div>setor</div>
+            </div>
+          </TableCell>
+        </TableRow>
+      </TableHead>
     )
   }
 
   function rederTableData() {
-    return collaboratorData.map(currentColaborator => {
-      return (
-        <tr
-          key={currentColaborator.id}
-          style={{ cursor: 'pointer' }}
-          onClick={() => showCollaborator(currentColaborator)}>
-          <td>{currentColaborator.first_name}</td>
-          <td>
-            <div className={styles.containerLabel} >
-              <div className={styles.sectorLabel} style={{ backgroundColor: currentColaborator.color_departament }}>
-                {currentColaborator.name_departament}
+    return (
+      <TableBody>
+        {collaboratorData.map(currentColaborator => (
+          <TableRow
+            key={currentColaborator.id}
+            style={{ cursor: 'pointer' }}
+            onClick={() => showCollaborator(currentColaborator)}>
+            <TableCell >{currentColaborator.first_name}</TableCell>
+            <TableCell align="right">
+              <div className={styles.containerLabel} >
+                <div className={styles.sectorLabel} style={{ backgroundColor: currentColaborator.color_departament }}>
+                  {currentColaborator.name_departament}
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      )
-    })
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    )
   }
 
   function showCollaborator(collaborator) {
-    history.push("/sobre", collaborator);
+    history.push("/sobre", collaborator)
   }
 
   function handleInputChange(event) {
@@ -222,9 +232,21 @@ function SearchCollaborator(props) {
     anyActiveFilter ? setCollaboratorData(filteredCollaboratorList) : setCollaboratorData(fixedListCollaboratorData)
   }
 
+  const useStyles = makeStyles({
+    root: {
+      width: '100%',
+      marginBottom: '100px'
+    },
+    tableWrapper: {
+      maxHeight: '70vh',
+      overflow: 'auto',
+    },
+  })
+
+  const classes = useStyles()
+
   return (
     <div className={styles.container}>
-
       <div className={styles.containerFilter}>
         <h2 className={styles.titleContainerFilter}>Filtrar por:</h2>
         <section className={styles.containerDepartmentFilter}>
@@ -314,22 +336,15 @@ function SearchCollaborator(props) {
             onChange={handleInputChange} />
         </div>
 
-        <div className={styles.containerTeste}>
-          <div className={styles.containerTable}>
-            <table>
-              <thead>
-                {renderTableHeader()}
-              </thead>
-              <tbody>
-                {rederTableData()}
-              </tbody>
-            </table>
+        <Paper className={classes.root}>
+          <div className={classes.tableWrapper}>
+            <Table stickyHeader aria-label="sticky table">
+              {renderTableHeader()}
+              {rederTableData()}
+            </Table>
           </div>
-
-        </div>
-
+        </Paper>
       </section>
-
     </div>
   )
 }
