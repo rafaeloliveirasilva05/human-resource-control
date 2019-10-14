@@ -34,6 +34,13 @@
       "last_name": "Reeves",
       "department": 2,
       "active_status": 0
+    },
+    {
+      "id": 6,
+      "first_name": "Jonas",
+      "last_name": "Reeves",
+      "department": 1,
+      "active_status": 0
     }
   ]
 }

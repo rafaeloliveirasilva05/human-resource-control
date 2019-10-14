@@ -1,33 +1,31 @@
+/*************  Container  ***************/
 .container {
+  display: flex;
   max-width: 960px;
   margin: 60px auto 0px auto;
 }
 
-
+.containerInput{
+  margin-top: 60px;
+  margin-bottom: 15px;
+}
 
 input{
   padding: 12px 20px;
-  margin: 8px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
-
 .containerCard{
   display: flex;
   justify-content: space-between;
- 
+  margin-top: 30px;
 }
 
 h2 {
   border-bottom: 2px solid #e9e9e9;
-  margin-bottom: 10px;
   color: #767a80;
-}
-
-.itemCard{
-  margin-top: 10px;
 }
 
 @media (max-width: 760px){
@@ -39,32 +37,15 @@ h2 {
 }
 
 /************* Table ************/
-.containerTeste2{
-
-}
-
-
 .containerTeste {
   display: flex;
 }
 
-.containerFilter {
-  background-color: green;
-  flex: 1;
-}
-
 .containerTable{
   flex: 3;
-  background-color: red;
-}
-
-.link{
-  background-color: red;
-  width: 800px;
 }
 
 table{
-
   text-align: center;
   width: 100%;
   border-collapse: collapse;
@@ -81,8 +62,6 @@ td {
   padding: 15px 8px;
   border-top: 1px solid #d3d3d3; 
 }
-
-/* tr:nth-child(even){background-color: #fff0f5} */
 
 .containerLabel {
   display: flex;
@@ -101,5 +80,47 @@ td {
   width: 160px;
   background-color: red;
   color: white;
-  font-weight: 500;
+}
+
+/******************  Section Filter  ******************/
+.containerFilter {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #e9e9e9;
+  box-shadow : 2px 2px 2px rgba(0,0,0,0.2);
+  padding: 20px 30px;
+  margin-right: 60px;
+  height: 100%;
+}
+
+.titleContainerFilter{
+  font-size: 0.875rem;
+  border: 0;
+}
+
+.filterListItem{
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  padding-left: 10px;
+}
+
+.filterListItem:hover{
+  background-color: #e9e9e9;
+  cursor: pointer;
+}
+
+.selectionBox{
+  margin-right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerDepartmentFilter{
+  margin-top: 15px;
+}
+
+.containerDepartmentFilter h2 {
+  font-size: 1.125rem;
 }

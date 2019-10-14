@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
+import { MdCheckBox } from 'react-icons/md';
+import { MdCheckBoxOutlineBlank } from 'react-icons/md';
 
 import styles from './styles.module.css'
 import departmentDataJson from '../../data/department.json'
@@ -12,6 +14,12 @@ function SearchCollaborator(props) {
   const [collaboratorData, setCollaboratorData] = useState([])
   const [fixedListCollaboratorData, setFixedListCollaboratorData] = useState([])
 
+  const [administrativeFilter, setAdministrativeFilter] = useState(false)
+  const [developmentFilter, setDevelopmentFilter] = useState(false)
+  const [purchaseFilter, setPurchaseFilter] = useState(false)
+  const [activeStatusFilter, setActiveStatusFilter] = useState(false)
+  const [inactiveStatusFilter, setInactiveStatusFilter] = useState(false)
+
   let history = useHistory()
 
   useEffect(() => {
@@ -22,6 +30,10 @@ function SearchCollaborator(props) {
     setFixedListCollaboratorData(data)
     setCollaboratorData(data)
   }, [])
+
+  useEffect(() => {
+    filter()
+  }, [administrativeFilter, developmentFilter, purchaseFilter, activeStatusFilter, inactiveStatusFilter])
 
   function collaboratorsDataMapping(colaborator, department) {
     return colaborator.map(currentColaborator => {
@@ -42,8 +54,8 @@ function SearchCollaborator(props) {
 
   function mappingTotalCollaboratorsByDepartment() {
     return departmentData.map(currentDepartment => {
-      const allActiveCollaborator = fixedListCollaboratorData.filter(currentElement => {
-        return currentElement.active_status && currentElement.departamentId === currentDepartment.id
+      const allActiveCollaborator = collaboratorData.filter(currentElement => {
+        return currentElement.departamentId === currentDepartment.id
       })
 
       return {
@@ -107,38 +119,183 @@ function SearchCollaborator(props) {
     setCollaboratorData(listCollaborators)
   }
 
+  function filterByAdministrativeSector() {
+    let listCollaborators = fixedListCollaboratorData
+
+    listCollaborators = fixedListCollaboratorData.filter(currentCollaborator => {
+      return currentCollaborator.departamentId === 1
+    })
+
+    return listCollaborators
+  }
+
+  function filterByDevelopmentSector() {
+    let listCollaborators = fixedListCollaboratorData
+
+    listCollaborators = fixedListCollaboratorData.filter(currentCollaborator => {
+      return currentCollaborator.departamentId === 2
+    })
+
+    return listCollaborators
+  }
+
+  function filterBySectorPurchase() {
+    let listCollaborators = fixedListCollaboratorData
+
+    listCollaborators = fixedListCollaboratorData.filter(currentCollaborator => {
+      return currentCollaborator.departamentId === 3
+    })
+
+    return listCollaborators
+  }
+
+  function filterByActiveContributors(list) {
+    return list.filter(currentCollaborator => currentCollaborator.active_status === 1)
+  }
+
+  function filterByInactiveContributors(list) {
+    return list.filter(currentCollaborator => currentCollaborator.active_status === 0)
+  }
+
+  function filter() {
+    if (fixedListCollaboratorData.length === 0) return
+
+    let filteredCollaboratorList = []
+    let activeFilter = false
+
+    if (administrativeFilter) {
+      filteredCollaboratorList = filterByAdministrativeSector()
+      activeFilter = true
+    }
+
+    if (developmentFilter) {
+      filteredCollaboratorList = filterByDevelopmentSector().concat(filteredCollaboratorList)
+      activeFilter = true
+    }
+
+    if (purchaseFilter) {
+      filteredCollaboratorList = filterBySectorPurchase().concat(filteredCollaboratorList)
+      activeFilter = true
+    }
+
+    if (activeStatusFilter && !inactiveStatusFilter) {
+      if (activeFilter) {
+        filteredCollaboratorList = filterByActiveContributors(filteredCollaboratorList)
+      }
+      else {
+        filteredCollaboratorList = filterByActiveContributors(fixedListCollaboratorData)
+      }
+
+      activeFilter = true
+    }
+
+    if (inactiveStatusFilter && !activeStatusFilter) {
+      if (activeFilter) {
+        filteredCollaboratorList = filterByInactiveContributors(filteredCollaboratorList)
+      }
+      else {
+        filteredCollaboratorList = filterByInactiveContributors(fixedListCollaboratorData)
+      }
+
+      activeFilter = true
+    }
+
+    activeFilter ? setCollaboratorData(filteredCollaboratorList) : setCollaboratorData(fixedListCollaboratorData)
+  }
+
   return (
     <div className={styles.container}>
-      <h2>Quadro de Colaboradores</h2>
 
-      <input
-        name='name'
-        placeholder='Buscar colaborador'
-        value={collaboratorName}
-        onChange={handleInputChange}/>
+      <div className={styles.containerFilter}>
+        <h2 className={styles.titleContainerFilter}>Filtrar por:</h2>
+        <section className={styles.containerDepartmentFilter}>
+          <h2>Departamento</h2>
+          <div className={styles.navDepartamentoFilter}>
+            <ul>
+              <li
+                onClick={() => administrativeFilter ? setAdministrativeFilter(false) : setAdministrativeFilter(true)}
+                className={styles.filterListItem}>
+                <div className={styles.selectionBox}>
+                  {administrativeFilter ?
+                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                </div>
+                <a>Administrativo</a>
+              </li>
+              <li
+                onClick={() => developmentFilter ? setDevelopmentFilter(false) : setDevelopmentFilter(true)}
+                className={styles.filterListItem}>
+                <div className={styles.selectionBox}>
+                  {developmentFilter ?
+                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                </div>
+                <a>Desenvolvimento</a>
+              </li>
+              <li
+                onClick={() => purchaseFilter ? setPurchaseFilter(false) : setPurchaseFilter(true)}
+                className={styles.filterListItem}>
+                <div className={styles.selectionBox}>
+                  {purchaseFilter ?
+                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                </div>
+                <a>Compras</a>
+              </li>
+            </ul>
+          </div>
+        </section>
 
-      <div className={styles.containerCard}>
-        {mappingTotalCollaboratorsByDepartment().map(element =>
-          <div className={styles.itemCard} key={element.id}>
-            <Card
-              color={element.color_departament}
-              departament={element.name_departament}
-              TotalEmployeesDepartment={element.TotalEmployeesDepartment} />
-          </div>)}
+        <section className={styles.containerDepartmentFilter}>
+          <h2>Status Ativação</h2>
+          <div>
+            <ul>
+              <li
+                onClick={() => activeStatusFilter ? setActiveStatusFilter(false) : setActiveStatusFilter(true)}
+                className={styles.filterListItem}>
+                <div className={styles.selectionBox}>
+                  {activeStatusFilter ?
+                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                </div>
+                <a>Ativos</a>
+              </li>
+              <li
+                onClick={() => inactiveStatusFilter ? setInactiveStatusFilter(false) : setInactiveStatusFilter(true)}
+                className={styles.filterListItem}>
+                <div className={styles.selectionBox}>
+                  {inactiveStatusFilter ?
+                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                </div>
+                <a>Inativos</a>
+              </li>
+            </ul>
+          </div>
+        </section>
       </div>
 
-      <div style={{ marginTop: '40px' }}>
-        {/* <h2 style={{ marginTop: '40px' }}>Total de Colaboradores Ativos</h2> */}
+      <section style={{ flex: 3 }}>
+        <h2>Quadro de Colaboradores</h2>
+        <div className={styles.containerCard}>
+          {mappingTotalCollaboratorsByDepartment().map(element =>
+            <div className={styles.itemCard} key={element.id}>
+              <Card
+                color={element.color_departament}
+                departament={element.name_departament}
+                TotalEmployeesDepartment={element.TotalEmployeesDepartment} />
+            </div>)}
+        </div>
+
+        <div className={styles.containerInput}>
+          <input
+            name='name'
+            placeholder='Buscar colaborador'
+            value={collaboratorName}
+            onChange={handleInputChange} />
+        </div>
+
         <div className={styles.containerTeste}>
-
-          <div className={styles.containerFilter}>
-            <span>Filtrar por:</span>
-            <h4>teste 1</h4>
-            <h4>teste 2</h4>
-            <h4>teste 3</h4>
-            <h4>teste 4</h4>
-          </div>
-
           <div className={styles.containerTable}>
             <table>
               <thead>
@@ -151,7 +308,9 @@ function SearchCollaborator(props) {
           </div>
 
         </div>
-      </div>
+
+      </section>
+
     </div>
   )
 }

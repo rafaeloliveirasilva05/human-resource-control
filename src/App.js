@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
 import SearchCollaborator from './screens/SearchCollaborator'
 import CollaboratorData from './screens/CollaboratorData'
+import'./Styles/global.css'
 
 function App() {
   return (
