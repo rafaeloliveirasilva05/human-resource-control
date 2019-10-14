@@ -21,16 +21,16 @@ function SearchCollaborator(props) {
   const [inactiveStatusFilter, setInactiveStatusFilter] = useState(false)
   const [activeFilter, setActiveFilter] = useState(false)
 
-
   let history = useHistory()
 
   useEffect(() => {
     const { colaborator } = collaboratorDataJson
     const { department } = departmentDataJson
     const data = collaboratorsDataMapping(colaborator, department)
+    const orderedListContributors = sortList(data)
 
-    setFixedListCollaboratorData(data)
-    setCollaboratorData(data)
+    setFixedListCollaboratorData(orderedListContributors)
+    setCollaboratorData(orderedListContributors)
   }, [])
 
   useEffect(() => {
@@ -46,6 +46,7 @@ function SearchCollaborator(props) {
         id: currentColaborator.id,
         first_name: currentColaborator.first_name,
         last_name: currentColaborator.last_name,
+        full_name: `${ currentColaborator.first_name} ${currentColaborator.last_name}`,
         active_status: currentColaborator.active_status,
         name_departament: departament.name,
         departamentId: departament.id,
@@ -64,6 +65,14 @@ function SearchCollaborator(props) {
         ...currentDepartment,
         TotalEmployeesDepartment: allActiveCollaborator.length
       }
+    })
+  }
+
+  function sortList(collaborators) {
+    return collaborators.sort((a, b) => {
+      a = a.full_name.toLowerCase()
+      b = b.full_name.toLowerCase()
+      return a > b ? 1 : b > a ? -1 : 0
     })
   }
 
@@ -206,6 +215,8 @@ function SearchCollaborator(props) {
 
       anyActiveFilter = true
     }
+
+    filteredCollaboratorList = sortList(filteredCollaboratorList)
 
     anyActiveFilter ? setActiveFilter(true) : setActiveFilter(false)
     anyActiveFilter ? setCollaboratorData(filteredCollaboratorList) : setCollaboratorData(fixedListCollaboratorData)
