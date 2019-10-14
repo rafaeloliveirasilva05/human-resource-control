@@ -19,6 +19,8 @@ function SearchCollaborator(props) {
   const [purchaseFilter, setPurchaseFilter] = useState(false)
   const [activeStatusFilter, setActiveStatusFilter] = useState(false)
   const [inactiveStatusFilter, setInactiveStatusFilter] = useState(false)
+  const [activeFilter, setActiveFilter] = useState(false)
+
 
   let history = useHistory()
 
@@ -110,7 +112,12 @@ function SearchCollaborator(props) {
   }
 
   function searchByName(name) {
-    let listCollaborators = fixedListCollaboratorData
+    if (activeFilter && name.length === 0) {
+      filter()
+      return
+    }
+
+    let listCollaborators = activeFilter ? collaboratorData : fixedListCollaboratorData
 
     listCollaborators = listCollaborators.filter(collaborator => {
       return collaborator.first_name.toLowerCase().indexOf(name.toLowerCase()) === 0
@@ -161,46 +168,47 @@ function SearchCollaborator(props) {
     if (fixedListCollaboratorData.length === 0) return
 
     let filteredCollaboratorList = []
-    let activeFilter = false
+    let anyActiveFilter = false
 
     if (administrativeFilter) {
       filteredCollaboratorList = filterByAdministrativeSector()
-      activeFilter = true
+      anyActiveFilter = true
     }
 
     if (developmentFilter) {
       filteredCollaboratorList = filterByDevelopmentSector().concat(filteredCollaboratorList)
-      activeFilter = true
+      anyActiveFilter = true
     }
 
     if (purchaseFilter) {
       filteredCollaboratorList = filterBySectorPurchase().concat(filteredCollaboratorList)
-      activeFilter = true
+      anyActiveFilter = true
     }
 
     if (activeStatusFilter && !inactiveStatusFilter) {
-      if (activeFilter) {
+      if (anyActiveFilter) {
         filteredCollaboratorList = filterByActiveContributors(filteredCollaboratorList)
       }
       else {
         filteredCollaboratorList = filterByActiveContributors(fixedListCollaboratorData)
       }
 
-      activeFilter = true
+      anyActiveFilter = true
     }
 
     if (inactiveStatusFilter && !activeStatusFilter) {
-      if (activeFilter) {
+      if (anyActiveFilter) {
         filteredCollaboratorList = filterByInactiveContributors(filteredCollaboratorList)
       }
       else {
         filteredCollaboratorList = filterByInactiveContributors(fixedListCollaboratorData)
       }
 
-      activeFilter = true
+      anyActiveFilter = true
     }
 
-    activeFilter ? setCollaboratorData(filteredCollaboratorList) : setCollaboratorData(fixedListCollaboratorData)
+    anyActiveFilter ? setActiveFilter(true) : setActiveFilter(false)
+    anyActiveFilter ? setCollaboratorData(filteredCollaboratorList) : setCollaboratorData(fixedListCollaboratorData)
   }
 
   return (
