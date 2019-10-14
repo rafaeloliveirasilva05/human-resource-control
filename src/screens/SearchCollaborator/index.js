@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom"
+import axios from 'axios'
 import { MdCheckBox } from 'react-icons/md'
 import { MdCheckBoxOutlineBlank } from 'react-icons/md'
 
@@ -32,23 +33,40 @@ function SearchCollaborator(props) {
   let history = useHistory()
 
   useEffect(() => {
-    const { colaborator } = collaboratorDataJson
-    const { department } = departmentDataJson
-    const data = collaboratorsDataMapping(colaborator, department)
-    const orderedListContributors = sortList(data)
+    async function loadData() {
+     
+      try {
+        const respCollaborators = await axios.get('http://5da4c58757f48b0014fba345.mockapi.io/api/v1/collaborators')
+        const respDepartment = await axios.get('http://5da4c58757f48b0014fba345.mockapi.io/api/v1/department')
 
-    setFixedListCollaboratorData(orderedListContributors)
-    setCollaboratorData(orderedListContributors)
+        const data = collaboratorsDataMapping(respCollaborators.data, respDepartment.data)
+        const orderedListContributors = sortList(data)
+
+        setFixedListCollaboratorData(orderedListContributors)
+        setCollaboratorData(orderedListContributors)
+
+      } catch (error) {
+        alert('Erro ao carregar os dados.')
+      }
+    }
+
+    loadData()
+
   }, [])
 
   useEffect(() => {
     filter()
   }, [administrativeFilter, developmentFilter, purchaseFilter, activeStatusFilter, inactiveStatusFilter])
 
-  function collaboratorsDataMapping(colaborator, department) {
+  function collaboratorsDataMapping(colaborator, departments) {
     return colaborator.map(currentColaborator => {
-      const departament = department.find(departament => departament.id === currentColaborator.department)
-      const color = departmentData.find(color => color.id === currentColaborator.department)
+      const departament = departments.find(currentDepartament => {
+        return currentDepartament.id === currentColaborator.department
+      })
+
+      const color = departmentData.find(color => {
+        return color.id === currentColaborator.department
+      })
 
       return {
         id: currentColaborator.id,
