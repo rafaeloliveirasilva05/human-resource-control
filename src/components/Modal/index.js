@@ -3,7 +3,7 @@ import React from 'react'
 import styles from './styles.module.css'
 import Button from '../../components/Button'
 
-const Modal = ({ handleClose, showModal, title, message, name }) => {
+const Modal = ({ cancelAction, acceptAction, showModal, title, message, name }) => {
   const showHideClassName = showModal ? 'block' : 'none'
 
   return (
@@ -17,18 +17,18 @@ const Modal = ({ handleClose, showModal, title, message, name }) => {
 
         <div className={styles.containerButton}>
           <Button
-            buttonAction={handleClose}
+            buttonAction={cancelAction}
             label={'Não'}
             buttonColor={'red'}
-            styles={{padding:'10px 20px', fontSize:'1rem'}}
-            />
+            styles={{ padding: '10px 20px', fontSize: '1rem' }}
+          />
 
           <Button
-            buttonAction={handleClose}
+            buttonAction={acceptAction}
             label={'Sim'}
-            buttonColor={'green'} 
-            styles={{padding:'10px 20px', fontSize:'1rem'}}
-            />
+            buttonColor={'green'}
+            styles={{ padding: '10px 20px', fontSize: '1rem' }}
+          />
         </div>
       </section>
     </div>
