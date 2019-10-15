@@ -4,8 +4,6 @@ button{
   display:block;
   cursor:pointer;
   font-weight:bold;
-  font-size:20px;
-  padding:10px 20px;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.6);
   color:#fff;
 }

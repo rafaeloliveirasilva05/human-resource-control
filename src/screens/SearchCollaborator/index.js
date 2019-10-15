@@ -276,8 +276,8 @@ function SearchCollaborator(props) {
                 className={styles.filterListItem}>
                 <div className={styles.selectionBox}>
                   {administrativeFilter ?
-                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
-                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                    <MdCheckBox size={22} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={22} color={'#a9a9a9'} />}
                 </div>
                 <a>Administrativo</a>
               </li>
@@ -286,8 +286,8 @@ function SearchCollaborator(props) {
                 className={styles.filterListItem}>
                 <div className={styles.selectionBox}>
                   {developmentFilter ?
-                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
-                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                    <MdCheckBox size={22} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={22} color={'#a9a9a9'} />}
                 </div>
                 <a>Desenvolvimento</a>
               </li>
@@ -296,8 +296,8 @@ function SearchCollaborator(props) {
                 className={styles.filterListItem}>
                 <div className={styles.selectionBox}>
                   {purchaseFilter ?
-                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
-                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                    <MdCheckBox size={22} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={22} color={'#a9a9a9'} />}
                 </div>
                 <a>Compras</a>
               </li>
@@ -314,8 +314,8 @@ function SearchCollaborator(props) {
                 className={styles.filterListItem}>
                 <div className={styles.selectionBox}>
                   {activeStatusFilter ?
-                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
-                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                    <MdCheckBox size={22} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={22} color={'#a9a9a9'} />}
                 </div>
                 <a>Ativos</a>
               </li>
@@ -324,8 +324,8 @@ function SearchCollaborator(props) {
                 className={styles.filterListItem}>
                 <div className={styles.selectionBox}>
                   {inactiveStatusFilter ?
-                    <MdCheckBox size={30} color={'#a9a9a9'} /> :
-                    <MdCheckBoxOutlineBlank size={30} color={'#a9a9a9'} />}
+                    <MdCheckBox size={22} color={'#a9a9a9'} /> :
+                    <MdCheckBoxOutlineBlank size={22} color={'#a9a9a9'} />}
                 </div>
                 <a>Inativos</a>
               </li>

@@ -1,12 +1,13 @@
 /*************  Container  ***************/
 .container {
   display: flex;
-  max-width: 960px;
-  margin: 60px auto 0px auto;
+  max-width: 1160px;
+  padding: 40px 20px;
+  margin: 0px auto;
 }
 
 .containerInput{
-  margin-top: 60px;
+  margin-top: 30px;
   margin-bottom: 15px;
 }
 
@@ -53,6 +54,8 @@ h2 {
   padding: 4px 0;
   width: 160px;
   background-color: red;
+  font-size: 1rem;
+  font-weight: bold;
   color: white;
 }
 
@@ -75,7 +78,7 @@ h2 {
 .filterListItem{
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  padding: 5px 0;
   padding-left: 10px;
 }
 
@@ -97,4 +100,10 @@ h2 {
 
 .containerDepartmentFilter h2 {
   font-size: 1.125rem;
+  margin-bottom: 15px;
+}
+
+.containerDepartmentFilter a {
+  color: #767a80;
+  font-size: 1rem;
 }

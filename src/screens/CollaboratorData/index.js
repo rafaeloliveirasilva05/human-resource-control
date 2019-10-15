@@ -28,7 +28,8 @@ function CollaboratorData(props) {
         showModal={showModal}
         handleClose={() => disableCollaborator()}
         title={'Aviso'}
-        message={`Deseja desativar o colaborador ${first_name} ${last_name}`}>
+        message={`Deseja desativar o colaborador:`}
+        name={`${first_name} ${last_name}`}>
       </Modal>
 
       <h1>Dados do colaborador</h1>
@@ -57,12 +58,14 @@ function CollaboratorData(props) {
             <Button
               buttonAction={() => history.goBack()}
               label={'Não'}
-              buttonColor={'red'} />
+              buttonColor={'red'} 
+              styles={{padding:'10px 20px', fontSize:'1rem'}}/>
 
             <Button
               buttonAction={() => setShowModal(true)}
               label={'Sim'}
-              buttonColor={'green'} />
+              buttonColor={'green'} 
+              styles={{padding:'10px 20px', fontSize:'1rem'}}/>
           </div>
         </div>
         :
@@ -71,7 +74,8 @@ function CollaboratorData(props) {
             <Button
               buttonAction={() => history.goBack()}
               label={'Voltar'}
-              buttonColor={'Green'} />
+              buttonColor={'Green'} 
+              styles={{padding:'10px 20px', fontSize:'1rem'}}/>
           </div>
         </div>
       }

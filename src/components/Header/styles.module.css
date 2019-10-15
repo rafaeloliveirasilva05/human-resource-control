@@ -1,6 +1,5 @@
 
 header{
-  padding: 10px 0;
   background-color: #4085f4;
 }
 
@@ -8,8 +7,9 @@ header{
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  max-width: 960px;
+  max-width: 1160px;
   margin: 0 auto;
+  padding: 10px 20px;
 }
 
 .userData {

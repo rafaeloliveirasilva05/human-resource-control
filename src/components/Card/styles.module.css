@@ -5,9 +5,13 @@
 
 .containerCard{
   display: flex;
-  width: 160px;
+  width: 140px;
   flex-direction: column;
   color: #fff;
+}
+
+.containerCard h3 {
+  font-size: 1rem;
 }
 
 .containerCard > div {
@@ -17,5 +21,5 @@
 }
 
 .containerCard > div h3 {
-  font-size: 45px;
+  font-size: 1.75rem;
 }
